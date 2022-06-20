@@ -1,9 +1,6 @@
-const fetchURL = require('../../utils/fetch');
-
 exports.handler = async event => {
   try {
-    const data = await fetchURL();
-    console.log('data => ', data);
+    console.log('Entered function!!');
 
     return 'Done';
   } catch (error) {

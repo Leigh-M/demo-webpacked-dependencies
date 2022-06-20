@@ -8,14 +8,13 @@
         "lint": "eslint \"src/**/*.js\"",
         "build": "node scripts/bundle",
         "watchSourceJS": "watch 'npm run build' src",
-        "syncOnly": "npm run build && sam sync --stack-name demo-webpacked-deps --profile leigh-personal --region eu-west-1",
-        "deployWatchDist": "npm run build && sam sync --stack-name demo-webpacked-deps --watch --profile leigh-personal --region eu-west-1",
-        "logsTails": "sam logs --stack-name demo-webpacked-deps --profile leigh-personal --region eu-west-1 --tail"
+        "syncOnly": "npm run build && sam sync --stack-name demo-webpacked-deps --region eu-west-1",
+        "deployWatchDist": "npm run build && sam sync --stack-name demo-webpacked-deps --watch --region eu-west-1",
+        "logsTails": "sam logs --stack-name demo-webpacked-deps --region eu-west-1 --tail"
     },
     "author": "Leigh Mathieson",
     "license": "ISC",
     "dependencies": {
-        "node-fetch": "^2.6.5",
         "watch": "^0.13.0",
         "webpack": "^5.65.0"
     },

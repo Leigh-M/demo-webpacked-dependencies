@@ -30,7 +30,7 @@ module.exports = {
     devtool: 'eval-source-map',
     mode: 'development',
     entry: {
-        handleAuctionPropAlert: './src/handlers/handleAuctionPropAlert/index.js'
+        myHandler: './src/handlers/myHandler/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
