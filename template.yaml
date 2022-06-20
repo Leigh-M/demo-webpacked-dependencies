@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Provisions a demo stack with
+
+Resources:
+  # lambdas
+  myHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-myHandler'
+      Role: !GetAtt DemoExecutionRole.Arn
+      VpcConfig: # ensure your VPC & subnets have internet access
+        SubnetIds: [subnet-095d7b70b77f6cba0, subnet-0c3c31f8d4c618186]
+        SecurityGroupIds: [!Ref lambdaSG]
+      Handler: index.handler
+      CodeUri: ./dist/handleAuctionPropAlert
+      Runtime: nodejs16.x
+      Timeout: 6
+      MemorySize: 128
+
+  # policies
+  DemoLambdaPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:DescribeLogStreams
+              - logs:PutLogEvents
+            Resource: "*"
+      PolicyName: DemoLambdaPolicy
+      Roles:
+        - Ref: DemoExecutionRole
+
+  # roles
+  DemoExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      RoleName: DemoExecutionRole
+
+  # SGs
+  lambdaSG: # fine grained control over outbound, could open egress wider as very secure
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Sub ${AWS::StackName} lambda access to internet
+      GroupName: !Sub ${AWS::StackName}-lambda-sg
+      SecurityGroupEgress:
+        -
+          CidrIp: '0.0.0.0/0'
+          Description: lambda to internet over port 80
+          FromPort: 80
+          IpProtocol: TCP
+          ToPort: 80
+        -
+          CidrIp: '0.0.0.0/0'
+          Description: lambda to internet over port 80
+          FromPort: 443
+          IpProtocol: TCP
+          ToPort: 443
+      VpcId: vpc-0952b7c3bb9e695e6

@@ -1,0 +1,12 @@
+dist
+node_modules
+# For local debugging
+full.csv
+data/input
+data/output
+data/ukpostcodes.zip
+2020.csv
+data/pp-complete.csv
+token.json
+templateOut.yaml
+.aws-sam

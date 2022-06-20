@@ -1,0 +1,36 @@
+{
+    "name": "cleverbuy",
+    "version": "0.0.1",
+    "description": "Demo webpacked application",
+    "scripts": {
+        "test": "jest",
+        "watchTestFiles": "jest --watch --verbose=false",
+        "lint": "eslint \"src/**/*.js\"",
+        "build": "node scripts/bundle",
+        "watchSourceJS": "watch 'npm run build' src",
+        "syncOnly": "npm run build && sam sync --stack-name demo-webpacked-deps --profile leigh-personal --region eu-west-1",
+        "deployWatchDist": "npm run build && sam sync --stack-name demo-webpacked-deps --watch --profile leigh-personal --region eu-west-1",
+        "logsTails": "sam logs --stack-name demo-webpacked-deps --profile leigh-personal --region eu-west-1 --tail"
+    },
+    "author": "Leigh Mathieson",
+    "license": "ISC",
+    "dependencies": {
+        "node-fetch": "^2.6.5",
+        "watch": "^0.13.0",
+        "webpack": "^5.65.0"
+    },
+    "devDependencies": {
+        "@types/node": "^16.7.10",
+        "eslint": "^7.9.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-jest": "^22.15.1",
+        "jest": "^27.4.5"
+    },
+    "eslintConfig": {
+        "eslint one-var": [
+            "error",
+            "never"
+        ]
+    }
+}
